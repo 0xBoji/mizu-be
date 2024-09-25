@@ -6,11 +6,9 @@ const server = serve({
   port: 3000,
   fetch(req) {
     const url = new URL(req.url);
-    if (url.pathname === "/" && req.method === "GET") {
-      const fullQuery = url.search.slice(1); // Remove the leading '?'
-      const [accountIdPart, timestampPart] = fullQuery.split('?');
-      const accountId = accountIdPart.split('=')[1];
-      const timestamp = timestampPart ? timestampPart.split('=')[1] : undefined;
+    if (url.pathname === "/api/transactions" && req.method === "GET") {
+      const accountId = url.searchParams.get("accountId");
+      const timestamp = url.searchParams.get("timestamp");
 
       if (!accountId) {
         return new Response("Missing account ID", { status: 400 });
@@ -22,9 +20,8 @@ const server = serve({
   },
 });
 
-
 async function fetchAccountInfo(accountId: string, timestamp?: string) {
-  const apiUrl = `https://aptos-mainnet.nodit.io/v1/accounts/${accountId}/transactions`;
+  const apiUrl = `https://aptos-testnet.nodit.io/v1/accounts/${accountId}/transactions`;
   const options = {
     method: 'GET',
     headers: {accept: 'application/json', 'X-API-KEY': '2JFAPy5jyqdf4B2UgShVi821VkJWnirq'}
@@ -61,9 +58,5 @@ async function fetchAccountInfo(accountId: string, timestamp?: string) {
     return new Response(`Error: ${err}`, { status: 500 });
   }
 }
-
-
-
-
 
 console.log(`Server running at http://localhost:${server.port}`);
