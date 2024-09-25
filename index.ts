@@ -1,6 +1,5 @@
 import { serve } from "bun";
 
-console.log("Hello via Bun!");
 
 const server = serve({
   port: 3000,
