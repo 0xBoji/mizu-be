@@ -24,7 +24,7 @@ const server = serve({
 
 
 async function fetchAccountInfo(accountId: string, timestamp?: string) {
-  const apiUrl = `https://aptos-testnet.nodit.io/v1/accounts/${accountId}/transactions`;
+  const apiUrl = `https://aptos-mainnet.nodit.io/v1/accounts/${accountId}/transactions`;
   const options = {
     method: 'GET',
     headers: {accept: 'application/json', 'X-API-KEY': '2JFAPy5jyqdf4B2UgShVi821VkJWnirq'}
